@@ -1,0 +1,6 @@
+{
+  "name": "Grandstand 3D Bleachers Visualizer & Configurator",
+  "description": "Interactive real-time 3D bleacher and grandstand structural visualizer, parametric CAD configurator, and engineering Bill of Materials generator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
