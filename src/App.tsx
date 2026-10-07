@@ -25,7 +25,11 @@ export default function App() {
     return window.innerWidth < 768;
   });
   const [mobilePlacement, setMobilePlacement] = useState<'panel-top' | 'panel-bottom'>('panel-top');
+<<<<<<< HEAD
   const [mobilePanelHeight, setMobilePanelHeight] = useState<'split' | 'fullscreen-3d' | 'fullscreen-panel'>('split');
+=======
+  const [mobilePanelHeight, setMobilePanelHeight] = useState<'scrollable' | 'split' | 'fullscreen-3d' | 'fullscreen-panel'>('scrollable');
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
 
   useEffect(() => {
     const handleResize = () => {
@@ -81,7 +85,11 @@ export default function App() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="flex flex-col h-screen w-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
+=======
+    <div className="flex flex-col h-[100dvh] w-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
       {/* 3-Zone Top Bar */}
       <Header
         config={config}
@@ -94,21 +102,34 @@ export default function App() {
         onToggleSidebar={() => {
           setIsSidebarOpen(!isSidebarOpen);
           if (isMobile) {
+<<<<<<< HEAD
             setMobilePanelHeight('split');
+=======
+            setMobilePanelHeight('scrollable');
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
           }
         }}
       />
 
       {/* Main Interactive Stage */}
       <main
+<<<<<<< HEAD
         className={`relative flex-1 flex w-full h-[calc(100vh-3.5rem)] overflow-hidden ${
           isMobile
             ? mobilePlacement === 'panel-top'
+=======
+        className={`relative flex-1 flex w-full h-[calc(100dvh-3.5rem)] min-h-0 overflow-hidden ${
+          isMobile
+            ? mobilePanelHeight === 'scrollable'
+              ? 'flex-col overflow-y-auto'
+              : mobilePlacement === 'panel-top'
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
               ? 'flex-col'
               : 'flex-col-reverse'
             : 'flex-row'
         }`}
       >
+<<<<<<< HEAD
         {/* Mobile Viewport: Grandstand 3D drawing window below panel */}
         {isMobile ? (
           <>
@@ -138,6 +159,15 @@ export default function App() {
             {/* Grandstand 3D Drawing Window Below Panel on Mobile */}
             {mobilePanelHeight !== 'fullscreen-panel' && (
               <div className="relative w-full flex-1 min-h-[35vh] h-full overflow-hidden bg-slate-950">
+=======
+        {/* Mobile Viewport: Scrollable Page or Split Mode */}
+        {isMobile ? (
+          mobilePanelHeight === 'scrollable' ? (
+            /* Scrollable Mobile Page: Sticky 3D visualizer at top, fully scrollable CAD options underneath */
+            <div className="w-full flex-1 flex flex-col overflow-y-auto">
+              {/* Sticky 3D Visualizer Window */}
+              <div className="relative w-full h-[40dvh] min-h-[240px] shrink-0 sticky top-0 z-10 bg-slate-950 shadow-2xl border-b border-slate-800">
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                 <Viewport
                   config={config}
                   specs={specs}
@@ -145,6 +175,7 @@ export default function App() {
                   generatorRef={generatorRef}
                 />
 
+<<<<<<< HEAD
                 {/* Mobile Floating Action Controls on 3D Drawing Window */}
                 <div className="absolute top-2 right-2 z-20 flex items-center gap-1.5 pointer-events-auto">
                   {mobilePanelHeight === 'fullscreen-3d' || !isSidebarOpen ? (
@@ -171,6 +202,114 @@ export default function App() {
               </div>
             )}
           </>
+=======
+                {/* Floating Quick Action Mode Switchers on 3D Window */}
+                <div className="absolute top-2 right-2 z-20 flex items-center gap-1.5 pointer-events-auto font-mono text-[11px]">
+                  <button
+                    onClick={() => setMobilePanelHeight('fullscreen-3d')}
+                    className="px-2 py-1 bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700 rounded shadow-lg"
+                    title="Maximize 3D Drawing Window"
+                  >
+                    ⛶ Full 3D
+                  </button>
+                  <button
+                    onClick={() => setMobilePanelHeight('split')}
+                    className="px-2 py-1 bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700 rounded shadow-lg"
+                    title="Switch to Split Screen"
+                  >
+                    ✂ Split
+                  </button>
+                </div>
+              </div>
+
+              {/* Naturally Scrollable CAD Parameters Panel (No height cutoff from browser address bar) */}
+              {isSidebarOpen && (
+                <div className="w-full flex-1 bg-slate-950/98">
+                  <ConfigSidebar
+                    config={config}
+                    onChange={handleUpdateConfig}
+                    isOpen={isSidebarOpen}
+                    onToggleOpen={() => setIsSidebarOpen(false)}
+                    isMobile={true}
+                    mobilePlacement="panel-top"
+                    mobilePanelHeight="fullscreen-panel"
+                    onSetMobilePanelHeight={setMobilePanelHeight}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            /* Split or Fullscreen 3D Viewport */
+            <>
+              {/* Top Panel on Mobile */}
+              {isSidebarOpen && mobilePanelHeight !== 'fullscreen-3d' && (
+                <div
+                  className={`w-full shrink-0 transition-all duration-300 overflow-hidden ${
+                    mobilePanelHeight === 'fullscreen-panel' ? 'h-full' : 'h-[46dvh]'
+                  }`}
+                >
+                  <ConfigSidebar
+                    config={config}
+                    onChange={handleUpdateConfig}
+                    isOpen={isSidebarOpen}
+                    onToggleOpen={() => setIsSidebarOpen(false)}
+                    isMobile={true}
+                    mobilePlacement={mobilePlacement}
+                    onToggleMobilePlacement={() =>
+                      setMobilePlacement((prev) => (prev === 'panel-top' ? 'panel-bottom' : 'panel-top'))
+                    }
+                    mobilePanelHeight={mobilePanelHeight}
+                    onSetMobilePanelHeight={setMobilePanelHeight}
+                  />
+                </div>
+              )}
+
+              {/* Grandstand 3D Drawing Window */}
+              {mobilePanelHeight !== 'fullscreen-panel' && (
+                <div className="relative w-full flex-1 min-h-[35dvh] h-full overflow-hidden bg-slate-950">
+                  <Viewport
+                    config={config}
+                    specs={specs}
+                    onChangeConfig={handleUpdateConfig}
+                    generatorRef={generatorRef}
+                  />
+
+                  {/* Mobile Floating Action Controls */}
+                  <div className="absolute top-2 right-2 z-20 flex items-center gap-1.5 pointer-events-auto font-mono text-[11px]">
+                    <button
+                      onClick={() => setMobilePanelHeight('scrollable')}
+                      className="px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded shadow-lg font-semibold"
+                      title="Switch to Scrollable Page Mode"
+                    >
+                      📜 Scroll Page
+                    </button>
+
+                    {mobilePanelHeight === 'fullscreen-3d' || !isSidebarOpen ? (
+                      <button
+                        onClick={() => {
+                          setIsSidebarOpen(true);
+                          setMobilePanelHeight('split');
+                        }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded shadow-2xl text-xs font-semibold"
+                      >
+                        <Sliders className="w-3.5 h-3.5" />
+                        <span>CAD Controls</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setMobilePanelHeight('fullscreen-3d')}
+                        className="px-2 py-1 bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700 rounded shadow-lg"
+                        title="Maximize 3D Drawing Window"
+                      >
+                        ⛶ Full 3D
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </>
+          )
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
         ) : (
           /* Desktop & Tablet Viewport Stage (Preserved layout) */
           <>

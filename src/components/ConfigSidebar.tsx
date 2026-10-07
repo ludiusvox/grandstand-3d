@@ -334,6 +334,7 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                   />
                 </div>
                 {config.pressBox.enabled && (
+<<<<<<< HEAD
                   <div className="grid grid-cols-2 gap-1.5 pt-1 border-t border-slate-800 text-xs">
                     {(['20x8', '40x8'] as PressBoxSize[]).map((sz) => (
                       <button
@@ -353,6 +354,46 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                         {sz === '20x8' ? '20×8ft' : '40×8ft'}
                       </button>
                     ))}
+=======
+                  <div className="space-y-2 pt-1 border-t border-slate-800 text-xs">
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {(['20x8', '40x8'] as PressBoxSize[]).map((sz) => (
+                        <button
+                          key={sz}
+                          onClick={() =>
+                            onChange((prev) => ({
+                              ...prev,
+                              pressBox: { ...prev.pressBox, size: sz, widthFt: sz === '40x8' ? 40 : 20 },
+                            }))
+                          }
+                          className={`py-1 text-xs font-mono rounded border ${
+                            config.pressBox.size === sz
+                              ? 'bg-blue-600 border-blue-500 text-white'
+                              : 'bg-slate-950 border-slate-800 text-slate-400'
+                          }`}
+                        >
+                          {sz === '20x8' ? '20×8ft' : '40×8ft'}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-slate-300 text-[11px]">Press Box Color</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3.5 h-3.5 rounded border border-white/20" style={{ backgroundColor: config.pressBox.color || '#dc2626' }} />
+                        <input
+                          type="color"
+                          value={config.pressBox.color || '#dc2626'}
+                          onChange={(e) =>
+                            onChange((prev) => ({
+                              ...prev,
+                              pressBox: { ...prev.pressBox, color: e.target.value },
+                            }))
+                          }
+                          className="w-5 h-5 bg-transparent border-0 rounded cursor-pointer"
+                        />
+                      </div>
+                    </div>
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                   </div>
                 )}
               </div>
@@ -395,6 +436,43 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                 </div>
               </div>
 
+<<<<<<< HEAD
+=======
+              {/* Front Walkway & Column Depth Controls (Mobile) */}
+              <div className="p-2.5 bg-slate-900/80 border border-slate-800 rounded space-y-2 text-xs">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-slate-200">Front Walkway & Columns</span>
+                  <span className="font-mono text-[10px] text-blue-400 bg-blue-950/80 px-1.5 py-0.5 rounded border border-blue-800/60 font-bold">
+                    {config.walkwayWidthFt ?? 6}' ({config.walkwayColumns ?? 3} Cols Deep)
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-1">
+                  {[
+                    { w: 6, c: 3 as const, label: '6\' (3 Cols)' },
+                    { w: 8, c: 3 as const, label: '8\' (3 Cols)' },
+                  ].map((item) => (
+                    <button
+                      key={`${item.w}-${item.c}`}
+                      onClick={() =>
+                        onChange((prev) => ({
+                          ...prev,
+                          walkwayWidthFt: item.w,
+                          walkwayColumns: item.c,
+                        }))
+                      }
+                      className={`py-1 text-[11px] rounded border font-medium ${
+                        (config.walkwayWidthFt ?? 6) === item.w && (config.walkwayColumns ?? 3) === item.c
+                          ? 'bg-blue-600 border-blue-500 text-white font-semibold'
+                          : 'bg-slate-950 border-slate-800 text-slate-400'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
               {/* Front Platform X-Bracing */}
               {config.elevation > 0 && (
                 <div className="p-2.5 bg-slate-900/80 border border-slate-800 rounded space-y-1.5 text-xs">
@@ -432,6 +510,7 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
             <div className="space-y-4">
               <div>
                 <label className="text-xs font-semibold text-slate-200 block mb-1.5">Seating System</label>
+<<<<<<< HEAD
                 <div className="grid grid-cols-1 gap-1.5">
                   {[
                     { id: 'bench', name: '2" x 10" Aluminum Planks' },
@@ -450,11 +529,31 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                       {s.name}
                     </button>
                   ))}
+=======
+                <div className="p-2.5 bg-slate-900 border border-slate-800 rounded text-xs space-y-1">
+                  <div className="font-semibold text-white">2" x 10" Clear Anodized Aluminum Bench Planks</div>
+                  <div className="text-[11px] text-slate-400">Fixed architectural aluminum seating (no color changes).</div>
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                 </div>
               </div>
 
               <div>
+<<<<<<< HEAD
                 <label className="text-xs font-semibold text-slate-200 block mb-1.5">Team Color Presets</label>
+=======
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-semibold text-slate-200 block">Riser / Kickboard Color</label>
+                  <input
+                    type="color"
+                    value={config.riserColor || config.seatColor || '#1d4ed8'}
+                    onChange={(e) =>
+                      onChange((prev) => ({ ...prev, riserColor: e.target.value }))
+                    }
+                    className="w-5 h-5 bg-transparent border-0 rounded cursor-pointer"
+                  />
+                </div>
+                <div className="text-[11px] text-slate-400 mb-2">Vertical kickboard behind each seat row.</div>
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                 <div className="grid grid-cols-2 gap-1.5">
                   {TEAM_PALETTES.map((tp) => (
                     <button
@@ -462,8 +561,13 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                       onClick={() =>
                         onChange((prev) => ({
                           ...prev,
+<<<<<<< HEAD
                           seatColor: tp.seat,
                           backrestColor: tp.back,
+=======
+                          riserColor: tp.seat,
+                          seatColor: '#d1d5db',
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                           frameColor: tp.frame,
                         }))
                       }
@@ -504,6 +608,41 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
 
           {activeTab === 'addons' && (
             <div className="space-y-3">
+<<<<<<< HEAD
+=======
+              <div>
+                <label className="text-xs font-semibold text-slate-200 block mb-1.5">Field Environment Terrain</label>
+                <div className="grid grid-cols-2 gap-1.5 text-xs">
+                  {[
+                    { id: 'soccer', label: 'Soccer Pitch' },
+                    { id: 'football', label: 'Football Turf' },
+                    { id: 'racetrack', label: 'Racetrack' },
+                    { id: 'dirt-track', label: 'Dirt Track' },
+                    { id: 'track', label: 'Athletics Track' },
+                    { id: 'basketball', label: 'Hardwood Court' },
+                    { id: 'architectural-studio', label: 'CAD Studio' },
+                  ].map((env) => (
+                    <button
+                      key={env.id}
+                      onClick={() =>
+                        onChange((prev) => ({
+                          ...prev,
+                          fieldEnvironment: env.id as FieldEnvironment,
+                        }))
+                      }
+                      className={`p-2 text-center rounded border transition-colors ${
+                        config.fieldEnvironment === env.id
+                          ? 'bg-blue-600 border-blue-500 text-white font-semibold'
+                          : 'bg-slate-900 border-slate-800 text-slate-300'
+                      }`}
+                    >
+                      {env.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
               <div className="p-3 bg-slate-900/70 border border-slate-800 rounded flex items-center justify-between text-xs">
                 <div>
                   <span className="text-slate-200 font-semibold block">Cantilever Shade Canopy</span>
@@ -829,6 +968,7 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
               </div>
 
               {config.pressBox.enabled && (
+<<<<<<< HEAD
                 <div className="space-y-2 pt-2 border-t border-slate-800 text-xs">
                   <label className="text-slate-400 block mb-1">
                     Booth Size: <span className="text-blue-400 font-mono">{"{20ft x 8ft, 40ft x 8ft}"}</span>
@@ -856,6 +996,95 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                         {size === '20x8' ? '20ft × 8ft Booth' : '40ft × 8ft Booth'}
                       </button>
                     ))}
+=======
+                <div className="space-y-3 pt-2 border-t border-slate-800 text-xs">
+                  <div>
+                    <label className="text-slate-400 block mb-1">
+                      Booth Size: <span className="text-blue-400 font-mono">{"{20ft x 8ft, 40ft x 8ft}"}</span>
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {(['20x8', '40x8'] as PressBoxSize[]).map((size) => (
+                        <button
+                          key={size}
+                          onClick={() =>
+                            onChange((prev) => ({
+                              ...prev,
+                              pressBox: {
+                                ...prev.pressBox,
+                                size,
+                                widthFt: size === '40x8' ? 40 : 20,
+                              },
+                            }))
+                          }
+                          className={`py-2 text-center rounded font-mono font-semibold border transition-colors ${
+                            config.pressBox.size === size
+                              ? 'bg-blue-600 border-blue-500 text-white'
+                              : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                          }`}
+                        >
+                          {size === '20x8' ? '20ft × 8ft Booth' : '40ft × 8ft Booth'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Press Box Color Selection */}
+                  <div className="p-2.5 bg-slate-950/70 border border-slate-800 rounded-lg space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="font-semibold text-slate-200 block text-xs">Press Box Exterior Color</span>
+                        <span className="text-[11px] text-slate-400">Architectural cladding with white roof fascia & black window frames</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="w-4 h-4 rounded border border-white/20 shadow-sm"
+                          style={{ backgroundColor: config.pressBox.color || '#dc2626' }}
+                        />
+                        <input
+                          type="color"
+                          value={config.pressBox.color || '#dc2626'}
+                          onChange={(e) =>
+                            onChange((prev) => ({
+                              ...prev,
+                              pressBox: { ...prev.pressBox, color: e.target.value },
+                            }))
+                          }
+                          className="w-6 h-6 bg-transparent border-0 rounded cursor-pointer"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-1.5 pt-1">
+                      {[
+                        { name: 'Crimson Red', hex: '#dc2626' },
+                        { name: 'Navy Blue', hex: '#1e3a8a' },
+                        { name: 'Royal Blue', hex: '#1d4ed8' },
+                        { name: 'Forest Green', hex: '#15803d' },
+                        { name: 'Charcoal', hex: '#334155' },
+                        { name: 'Arctic White', hex: '#f8fafc' },
+                        { name: 'Jet Black', hex: '#0f172a' },
+                        { name: 'Athletic Gold', hex: '#eab308' },
+                      ].map((c) => (
+                        <button
+                          key={c.hex}
+                          onClick={() =>
+                            onChange((prev) => ({
+                              ...prev,
+                              pressBox: { ...prev.pressBox, color: c.hex },
+                            }))
+                          }
+                          className={`p-1 rounded border text-[10px] flex items-center gap-1.5 ${
+                            (config.pressBox.color || '#dc2626') === c.hex
+                              ? 'bg-blue-950 border-blue-500 text-white'
+                              : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
+                          }`}
+                        >
+                          <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: c.hex }} />
+                          <span className="truncate">{c.name}</span>
+                        </button>
+                      ))}
+                    </div>
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                   </div>
                 </div>
               )}
@@ -915,6 +1144,78 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
               </div>
             </div>
 
+<<<<<<< HEAD
+=======
+            {/* Front Walkway & Column Support Depth (User CAD Engineering Requirement) */}
+            <div className="p-3 bg-slate-900/80 border border-slate-800 rounded-lg space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-xs font-semibold text-slate-200 block">
+                    Front Walkway & Column Support Depth
+                  </label>
+                  <span className="text-[11px] text-slate-400">
+                    Modular frame bent understructure with diagonal cross members
+                  </span>
+                </div>
+                <span className="font-mono text-xs font-bold text-emerald-400 px-2 py-0.5 bg-emerald-950/60 border border-emerald-800/60 rounded">
+                  {config.walkwayWidthFt ?? 6}' Walkway · {config.walkwayColumns ?? 3} Columns Deep
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                {[
+                  {
+                    id: '6ft-3col',
+                    width: 6,
+                    cols: 3 as const,
+                    label: "6ft — 3 Columns Deep",
+                    sub: "2 Bays @ 3.0'",
+                  },
+                  {
+                    id: '8ft-3col',
+                    width: 8,
+                    cols: 3 as const,
+                    label: "8ft — 3 Columns Deep",
+                    sub: "2 Bays @ 4.0'",
+                  },
+                ].map((item) => {
+                  const isSelected =
+                    (config.walkwayWidthFt ?? 6) === item.width &&
+                    (config.walkwayColumns ?? 3) === item.cols;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() =>
+                        onChange((prev) => ({
+                          ...prev,
+                          walkwayWidthFt: item.width,
+                          walkwayColumns: item.cols,
+                        }))
+                      }
+                      className={`py-2 px-2 text-center rounded border transition-colors ${
+                        isSelected
+                          ? 'bg-blue-600 border-blue-500 text-white shadow-sm'
+                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                      }`}
+                    >
+                      <div className="font-semibold text-xs leading-tight">{item.label}</div>
+                      <div className="text-[10px] opacity-75 mt-0.5 font-mono">{item.sub}</div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="text-[11px] text-slate-400 bg-slate-950/60 p-2.5 rounded border border-slate-800/80 leading-relaxed font-mono flex items-center justify-between">
+                <span>
+                  Walkway Depth: <span className="text-white font-bold">{config.walkwayWidthFt ?? 6}'-0"</span> | Columns: <span className="text-emerald-400 font-bold">{config.walkwayColumns ?? 3} posts deep</span>
+                </span>
+                <span className="text-blue-400 text-[10px]">
+                  {(config.walkwayColumns ?? 3) - 1} Cross-braced Bays
+                </span>
+              </div>
+            </div>
+
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
             {/* Front Platform X-Pattern Cross Members (Adjustable for Front Elevation Presets {2, 4, 8, 10} ft) */}
             {config.elevation > 0 && (
               <div className="p-3 bg-slate-900/80 border border-slate-800 rounded-lg space-y-3">
@@ -1009,6 +1310,7 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
         {activeTab === 'seating' && (
           <div className="space-y-5">
             <div>
+<<<<<<< HEAD
               <label className="block text-xs font-medium text-slate-300 mb-2">
                 Seating System
               </label>
@@ -1045,22 +1347,69 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                     <div className="text-[11px] text-slate-400 mt-0.5">{seat.desc}</div>
                   </button>
                 ))}
+=======
+              <label className="block text-xs font-semibold text-slate-200 mb-2">
+                Seating Planks
+              </label>
+              <div className="p-3 bg-slate-900/80 border border-slate-800 rounded-lg space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-white">2" × 10" Clear Anodized Aluminum Bench Planks</span>
+                  <span className="text-[10px] text-emerald-400 font-mono bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800">IBC / ICC 300 Standard</span>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  Natural serrated clear anodized aluminum planks with non-skid flutes. Seat planks are fixed natural aluminum (no color changes).
+                </p>
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
               </div>
             </div>
 
             <div>
+<<<<<<< HEAD
               <label className="block text-xs font-medium text-slate-300 mb-2">
                 Team Color Palette
               </label>
               <div className="grid grid-cols-2 gap-2">
+=======
+              <div className="flex items-center justify-between mb-1">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-200">
+                    Riser / Kickboard Color
+                  </label>
+                  <span className="text-[11px] text-slate-400">
+                    The vertical kickboard behind each seat that goes up to the next level
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span
+                    className="w-4 h-4 rounded border border-white/20 shadow-sm"
+                    style={{ backgroundColor: config.riserColor || config.seatColor || '#1d4ed8' }}
+                  />
+                  <input
+                    type="color"
+                    value={config.riserColor || config.seatColor || '#1d4ed8'}
+                    onChange={(e) =>
+                      onChange((prev) => ({ ...prev, riserColor: e.target.value }))
+                    }
+                    className="w-7 h-7 bg-transparent border-0 rounded cursor-pointer"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 mt-2.5">
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                 {TEAM_PALETTES.map((tp) => (
                   <button
                     key={tp.name}
                     onClick={() =>
                       onChange((prev) => ({
                         ...prev,
+<<<<<<< HEAD
                         seatColor: tp.seat,
                         backrestColor: tp.back,
+=======
+                        riserColor: tp.seat,
+                        seatColor: '#d1d5db',
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                         frameColor: tp.frame,
                       }))
                     }
@@ -1086,6 +1435,7 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
 
             <div className="space-y-3 pt-2 border-t border-slate-800">
               <div className="flex items-center justify-between">
+<<<<<<< HEAD
                 <span className="text-xs text-slate-300">Seat Finish Color</span>
                 <input
                   type="color"
@@ -1099,6 +1449,12 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
 
               <div className="flex items-center justify-between">
                 <span className="text-xs text-slate-300">Understructure Frame Finish</span>
+=======
+                <div>
+                  <span className="text-xs text-slate-300 block">Understructure Frame Finish</span>
+                  <span className="text-[10px] text-slate-400">Steel columns, stringers & cross braces</span>
+                </div>
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                 <input
                   type="color"
                   value={config.frameColor}
@@ -1263,6 +1619,7 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
             </div>
 
             <div>
+<<<<<<< HEAD
               <label className="block text-xs font-medium text-slate-300 mb-2">
                 Field Environment
               </label>
@@ -1272,6 +1629,25 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                   { id: 'basketball', label: 'Hardwood Court' },
                   { id: 'track', label: 'Running Track' },
                   { id: 'architectural-studio', label: 'CAD Studio Grid' },
+=======
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs font-semibold text-slate-200">
+                  Field Environment Terrain
+                </label>
+                <span className="text-[11px] text-blue-400 font-mono capitalize">
+                  {config.fieldEnvironment?.replace('-', ' ') || 'Football'}
+                </span>
+              </div>
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 text-xs">
+                {[
+                  { id: 'soccer', label: 'Soccer Pitch', desc: 'Regulation grass' },
+                  { id: 'football', label: 'Football Turf', desc: '100-yd gridiron' },
+                  { id: 'racetrack', label: 'Racetrack', desc: 'Asphalt & kerbs' },
+                  { id: 'dirt-track', label: 'Dirt Track', desc: 'Clay speedway' },
+                  { id: 'track', label: 'Athletics Track', desc: '8-lane track' },
+                  { id: 'basketball', label: 'Hardwood Court', desc: 'Maple parquet' },
+                  { id: 'architectural-studio', label: 'CAD Studio', desc: 'Precision grid' },
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                 ].map((env) => (
                   <button
                     key={env.id}
@@ -1281,6 +1657,7 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                         fieldEnvironment: env.id as FieldEnvironment,
                       }))
                     }
+<<<<<<< HEAD
                     className={`py-2 px-2 text-center rounded border transition-colors ${
                       config.fieldEnvironment === env.id
                         ? 'bg-blue-600 border-blue-500 text-white font-medium'
@@ -1288,6 +1665,16 @@ export const ConfigSidebar: React.FC<ConfigSidebarProps> = ({
                     }`}
                   >
                     {env.label}
+=======
+                    className={`p-2.5 text-left rounded-lg border transition-all ${
+                      config.fieldEnvironment === env.id
+                        ? 'bg-blue-600/20 border-blue-500 text-white shadow-sm ring-1 ring-blue-500'
+                        : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    }`}
+                  >
+                    <div className="font-semibold text-xs text-slate-200">{env.label}</div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">{env.desc}</div>
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
                   </button>
                 ))}
               </div>

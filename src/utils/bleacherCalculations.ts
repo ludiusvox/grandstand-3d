@@ -19,12 +19,22 @@ export const DEFAULT_CONFIG: BleacherConfig = {
     widthFt: 20,
     depthFt: 8,
     heightFt: 8,
+<<<<<<< HEAD
     hasRoofDeck: true,
     color: '#1e293b',
+=======
+    hasRoofDeck: false,
+    color: '#dc2626', // Vibrant Red (matching modular factory booth specification)
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
   },
   sideBarricades: true,
   accessStairs: 'both', // {left side, right side, both sides}
   frontXBraceMode: 'modular-tiered', // {modular-tiered, full-height} adjustable front cross members
+<<<<<<< HEAD
+=======
+  walkwayWidthFt: 6, // 6ft front walkway standard
+  walkwayColumns: 3, // 3 columns deep (creates 2 bays with diagonal cross-bracing)
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
 
   frameType: 'angle-frame',
   frameSpacingFt: 6, // 6ft on-center typical
@@ -32,7 +42,12 @@ export const DEFAULT_CONFIG: BleacherConfig = {
   riserType: 'semi-closed',
   seatType: 'bench',
 
+<<<<<<< HEAD
   seatColor: '#1d4ed8', // Royal Blue
+=======
+  seatColor: '#d1d5db', // Natural Anodized Aluminum 2x10 Planks
+  riserColor: '#1d4ed8', // Custom Riser Kickboard Color (Royal Blue default)
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
   frameColor: '#cbd5e1', // Galvanized Zinc
   backrestColor: '#1e40af',
   deckColor: '#94a3b8',
@@ -178,7 +193,12 @@ export function calculateSpecs(config: BleacherConfig): CalculatedSpecs {
   const totalCostUsd = seatingCostUsd + optionsCostUsd;
 
   // Structural Dimensions
+<<<<<<< HEAD
   const frontWalkwayDepth = isElevated ? 5.0 : 2.0; // 5ft front walkway when elevated
+=======
+  const frontWalkwayDepth = config.walkwayWidthFt ?? 6.0; // 6ft front walkway (or 8ft)
+  const walkwayCols = config.walkwayColumns ?? 4; // 4 columns deep (or 3)
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
   const depthFeet = parseFloat(((config.rows * config.rowRunInches) / 12 + frontWalkwayDepth).toFixed(1));
   const topSeatHeightFeet = parseFloat((config.elevation + (config.rows * config.rowRiseInches) / 12).toFixed(1));
   const overallHeightFeet = parseFloat(
@@ -193,6 +213,7 @@ export function calculateSpecs(config: BleacherConfig): CalculatedSpecs {
   const footboardPlanksPerRow = config.deckType === 'single-foot' ? 1 : 2;
   const seatPlanksPerRow = 1;
   const riserPlanksPerRow = config.riserType === 'open' ? 0 : 1;
+<<<<<<< HEAD
   const aluminumLinearFeet =
     (footboardPlanksPerRow + seatPlanksPerRow + riserPlanksPerRow) * config.rows * totalLength +
     (isElevated ? 3 * totalLength : 0); // front walkway planks
@@ -239,6 +260,83 @@ export function calculateSpecs(config: BleacherConfig): CalculatedSpecs {
       unit: 'Pieces',
       description: 'Internal diagonal compression brace stiffening frame bay.',
       drawingRef: 'Sheet S3 Detail H',
+=======
+  const walkwayPlankLines = Math.max(2, Math.round(frontWalkwayDepth / 2));
+  const aluminumLinearFeet =
+    (footboardPlanksPerRow + seatPlanksPerRow + riserPlanksPerRow) * config.rows * totalLength +
+    (walkwayPlankLines * totalLength); // Front walkway planks
+
+  // Steel Weight Estimation
+  const frameTierCount = Math.max(1, Math.round(config.elevation / 3.33));
+  const weightPerFrame = (config.rows * 45) + (isElevated ? frameTierCount * 85 : 0) + (walkwayCols * 18);
+  const steelWeightLbs = Math.round(frameCount * weightPerFrame);
+
+  // Generate Itemized Part List matching Modular Bent Architecture & Sheet S1
+  const num5RCModules = Math.ceil(config.rows / 5);
+  const structuralParts: StructuralPartItem[] = [
+    {
+      partId: 'Part W-POLE',
+      partName: `${frontWalkwayDepth}' Walkway ${walkwayCols}-Column Modular Support Frame`,
+      material: `Structural Steel Column Tube (${walkwayCols} Columns Deep @ ${frontWalkwayDepth}ft Walkway)`,
+      quantity: walkwayCols * frameCount,
+      unit: 'Pieces',
+      description: `Front walkway bent frame with ${walkwayCols} vertical posts deep across ${frontWalkwayDepth}ft walkway.`,
+      drawingRef: 'Sheet S1 / Walkway Detail',
+    },
+    {
+      partId: 'Part H1',
+      partName: 'Part H1 Uniform Diagonal Braces (Green)',
+      material: '1-1/2" Structural Steel Tubing / Angle (Green)',
+      quantity: ((walkwayCols - 1) + num5RCModules * 2) * frameCount * Math.max(1, Math.round((config.elevation + (config.rows * config.rowRiseInches) / 24) / 4.8)),
+      unit: 'Pieces',
+      description: 'Diagonal cross-members sloping uniformly down from the back and up in the front (Sheet S1 Detail 2).',
+      drawingRef: 'Sheet S1 Part H1 / Modular Bent Detail',
+    },
+    {
+      partId: 'Part 5RC',
+      partName: '5-Row Component (5RC) Stepped Raker Units',
+      material: 'Cyan Base Channel with White Riser Posts (Max 5 Rises High)',
+      quantity: num5RCModules * frameCount,
+      unit: 'Assemblies',
+      description: `${num5RCModules} modular 5-row component units per frame bent, kept short resting on stepped understructure beams.`,
+      drawingRef: 'Sheet S1 Part 5RC / Seating Plan',
+    },
+    {
+      partId: 'Part CB',
+      partName: 'Part CB Continuous Bracing Chords & Headers',
+      material: '2" x 2" x 3/16" Structural Steel Angle & Tubing (White)',
+      quantity: (num5RCModules + 2) * frameCount,
+      unit: 'Pieces',
+      description: 'Continuous horizontal chords and intermediate continuous bracing tying tower columns together.',
+      drawingRef: 'Sheet S1 Part CB',
+    },
+    {
+      partId: 'Part U-POLE',
+      partName: 'Stepped Modular Tower Columns (Orange/Amber)',
+      material: 'Structural Steel Column Posts (Orange/Amber)',
+      quantity: (walkwayCols + num5RCModules * 2) * frameCount,
+      unit: 'Pieces',
+      description: 'Vertical column poles stepping up at 5-row module intervals to support 5RC modules.',
+      drawingRef: 'Sheet S1 / Column Detail',
+    },
+    {
+      partId: 'Part S-RISER',
+      partName: 'Stepped Seating Vertical Risers & Seat Brackets',
+      material: 'White Rectangular Tubing & Aluminum Angle Brackets',
+      quantity: config.rows * frameCount,
+      unit: 'Pieces',
+      description: 'Standardized short risers (1 to 5 rows of rise) supporting seat & footboards.',
+      drawingRef: 'Sheet S3 Stepped Seat Unit',
+    },
+    {
+      partId: 'Part R-POST',
+      partName: 'Rear High Upright Guard Posts',
+      material: 'Heavy-Duty Structural Post (Magenta)',
+      quantity: frameCount,
+      unit: 'Pieces',
+      description: 'Tall rear upright posts anchoring top safety guardrail and back fencing.',
+      drawingRef: 'Sheet S5 Rear Detail',
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
     },
   ];
 
@@ -422,7 +520,11 @@ export function calculateSpecs(config: BleacherConfig): CalculatedSpecs {
       material: '1.5" x 4" x 1/4" Steel Channel Frame, .040 Sheet Metal, Tinted Glazing',
       quantity: 1,
       unit: 'Complete Booth',
+<<<<<<< HEAD
       description: `${config.pressBox.size} announcer booth with observation windows & roof deck.`,
+=======
+      description: `${config.pressBox.size} announcer booth with observation windows & finished roof fascia.`,
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
       drawingRef: 'Sheet S7 / S8 Press Box Details',
     });
   }

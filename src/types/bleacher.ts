@@ -16,7 +16,11 @@ export type DeckType = 'single-foot' | 'double-foot' | 'interlocking-deck';
 export type RiserType = 'open' | 'semi-closed' | 'fully-closed';
 export type SeatType = 'bench' | 'bench-with-back' | 'stadium-chair' | 'vip-cushioned';
 export type GuardrailStyle = 'vertical-pickets' | 'chain-link-mesh' | 'multi-rail';
+<<<<<<< HEAD
 export type FieldEnvironment = 'football' | 'basketball' | 'baseball' | 'track' | 'architectural-studio';
+=======
+export type FieldEnvironment = 'soccer' | 'football' | 'racetrack' | 'dirt-track' | 'track' | 'basketball' | 'baseball' | 'architectural-studio';
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
 export type CameraPreset = 'iso' | 'front' | 'side' | 'top' | 'spectator' | 'understructure';
 
 export interface PressBoxConfig {
@@ -61,6 +65,11 @@ export interface BleacherConfig {
   accessStairs: AccessStairsOption; // {left side, right side, both sides}
   frontXBraceMode: 'modular-tiered' | 'full-height' | 'double-x'; // Adjustable X-bracing for front elevation presets
   frontXBraceProfile?: 'flat-bar' | 'angle-iron' | 'pipe'; // Structural cross member profile
+<<<<<<< HEAD
+=======
+  walkwayWidthFt: number; // Front walkway depth in feet: 6' (standard) or 8'
+  walkwayColumns: 3 | 4; // 3 or 4 columns deep supporting the walkway (4 columns standard/diagram)
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
 
   // Structural & Deck Properties
   frameType: FrameType;
@@ -71,6 +80,10 @@ export interface BleacherConfig {
 
   // Finishes
   seatColor: string;
+<<<<<<< HEAD
+=======
+  riserColor?: string;
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
   frameColor: string;
   backrestColor: string;
   deckColor: string;

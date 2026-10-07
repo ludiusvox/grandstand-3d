@@ -1,1 +1,14 @@
 @import "tailwindcss";
+<<<<<<< HEAD
+=======
+
+html, body, #root {
+  background-color: #020617;
+  color: #f8fafc;
+  color-scheme: dark;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100dvh;
+}
+>>>>>>> 10fa525 (Initial commit: GrandStand-3D Bleachers Visualizer & Configurator)
